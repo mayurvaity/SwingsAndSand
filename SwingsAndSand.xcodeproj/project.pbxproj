@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D1AE6342C5634F70084CFB7 /* BeantownButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1AE6332C5634F70084CFB7 /* BeantownButtons.swift */; };
 		0DB8E63B2C562ED9003321C6 /* SwingsAndSandApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB8E63A2C562ED9003321C6 /* SwingsAndSandApp.swift */; };
 		0DB8E63D2C562ED9003321C6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB8E63C2C562ED9003321C6 /* ContentView.swift */; };
 		0DB8E63F2C562EDA003321C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0DB8E63E2C562EDA003321C6 /* Assets.xcassets */; };
@@ -14,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D1AE6332C5634F70084CFB7 /* BeantownButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeantownButtons.swift; sourceTree = "<group>"; };
 		0DB8E6372C562ED9003321C6 /* SwingsAndSand.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwingsAndSand.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DB8E63A2C562ED9003321C6 /* SwingsAndSandApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwingsAndSandApp.swift; sourceTree = "<group>"; };
 		0DB8E63C2C562ED9003321C6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -53,6 +55,7 @@
 			children = (
 				0DB8E63A2C562ED9003321C6 /* SwingsAndSandApp.swift */,
 				0DB8E63C2C562ED9003321C6 /* ContentView.swift */,
+				0D1AE6332C5634F70084CFB7 /* BeantownButtons.swift */,
 				0DB8E63E2C562EDA003321C6 /* Assets.xcassets */,
 				0DB8E6402C562EDA003321C6 /* Preview Content */,
 			);
@@ -138,6 +141,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0DB8E63D2C562ED9003321C6 /* ContentView.swift in Sources */,
+				0D1AE6342C5634F70084CFB7 /* BeantownButtons.swift in Sources */,
 				0DB8E63B2C562ED9003321C6 /* SwingsAndSandApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
