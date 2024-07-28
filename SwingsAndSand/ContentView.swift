@@ -47,9 +47,17 @@ struct ContentView: View {
     //to keep searchresults data
     @State private var searchResults: [MKMapItem] = []
     
+    //var to store selected marker data
+    @State private var selectedResult: MKMapItem?
+    
+    //var to store route data
+    @State private var route: MKRoute?
+    
+    
     var body: some View {
         //passing tracked position to the map initializer
-        Map(position: $position) {
+        //selection - to store selected marker data in selectedResult var, bcoz of this when selected a marker it gets bigger 
+        Map(position: $position, selection: $selectedResult) {
             //to create a marker (pin on map) to location of parking var
 //            Marker("Parking", coordinate: .parking)
             
@@ -73,6 +81,7 @@ struct ContentView: View {
                 //this way marker take default styling and naming from MKMapItem results
                 Marker(item: result)
             }
+            .annotationTitles(.hidden) //to hide names of the markers 
         }
         //mapStyle .standard - to specify map style
         //.hybrid - this map style combines .imagery (real) with labels 
@@ -84,13 +93,22 @@ struct ContentView: View {
             HStack {
                 Spacer()
                 
-                //search buttons
-                BeantownButtons(position: $position,
-                                searchResults: $searchResults,
-                                visibleRegion: visibleRegion
-                )
-                .padding(.top)
-                
+                VStack(spacing: 0) {
+                    if let selectedResult {
+                        ItemInfoView(selectedResult: selectedResult, route: route)
+                            .frame(height: 128)
+                            .clipShape(.rect(cornerRadius: 10))
+                            .padding([.top, .horizontal])
+                    }
+                    
+                    //search buttons
+                    BeantownButtons(position: $position,
+                                    searchResults: $searchResults,
+                                    visibleRegion: visibleRegion
+                    )
+                    .padding(.top)
+                }
+                    
                 Spacer()
             }
             .background(.thinMaterial) //to make buttons bg semi-transparent
@@ -99,6 +117,10 @@ struct ContentView: View {
         .onChange(of: searchResults) {
             position = .automatic
         }
+        //to get route data everytime marker selection has changed
+        .onChange(of: selectedResult) {
+            getDirections()
+        }
         //modifier to get data of visible region
         //this modifier will collect visible region data once user stop interacting w the map
         //to get constatnt changes to visible region (w/o user stopping), we can specify frequency parameter 
@@ -106,6 +128,30 @@ struct ContentView: View {
             visibleRegion = context.region
         }
     }
+    
+    
+    //fn to get route information
+    func getDirections() {
+        route = nil  //clearing data in route var
+        guard let selectedResult else { return } //no need to get route if selectedResult is NA
+        
+        //creating request to get route
+        let request = MKDirections.Request()
+        //specifying starting point of the route
+        request.source = MKMapItem(placemark: MKPlacemark(coordinate: .parking))
+        //specifying destination
+        request.destination = selectedResult
+        
+        Task {
+            //getting directions using abv created request
+            let directions = MKDirections(request: request)
+            //getting route information from directions
+            let response = try? await directions.calculate()
+            //getting 1st route from obtained list of routes
+            route = response?.routes.first
+        }
+    }
+    
 }
 
 #Preview {
