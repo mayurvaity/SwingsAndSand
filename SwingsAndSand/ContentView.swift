@@ -75,6 +75,7 @@ struct ContentView: View {
             }
             .annotationTitles(.hidden) //to hide the title text on map
             
+            
             //to show results of search (when clicked on search buttons below safeAreaInset)
             ForEach(searchResults, id: \.self) { result in
                 //creating marker for each search result
@@ -82,6 +83,15 @@ struct ContentView: View {
                 Marker(item: result)
             }
             .annotationTitles(.hidden) //to hide names of the markers 
+            
+            
+            //if route data is available, to display route on the map to selectedResult marker
+            if let route {
+                //to draw line on map
+                MapPolyline(route)
+                    .stroke(.blue, lineWidth: 5) //line shape details
+                
+            }
         }
         //mapStyle .standard - to specify map style
         //.hybrid - this map style combines .imagery (real) with labels 
