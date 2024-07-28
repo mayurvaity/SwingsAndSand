@@ -15,6 +15,9 @@ struct BeantownButtons: View {
     //var to store search results
     @Binding var searchResults: [MKMapItem]
     
+    //var to store visible region data
+    var visibleRegion: MKCoordinateRegion?
+    
     var body: some View {
         //MARK: - Search buttons
         HStack {
@@ -62,7 +65,8 @@ struct BeantownButtons: View {
         //specifying area to search within
         //center - center of the search area
         //span - width and height of map region
-        request.region = MKCoordinateRegion(
+        //using visibleRegion data if available (when user moves somewhere else in the map) 
+        request.region = visibleRegion ?? MKCoordinateRegion(
             center: .parking,
             span: MKCoordinateSpan(latitudeDelta: 0.0125, longitudeDelta: 0.0125)
             )

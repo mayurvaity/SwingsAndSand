@@ -41,6 +41,9 @@ struct ContentView: View {
     //to track the position when user has move the map view
     @State private var position: MapCameraPosition = .automatic
     
+    //state to track the region that's visible on the map
+    @State private var visibleRegion: MKCoordinateRegion?
+    
     //to keep searchresults data
     @State private var searchResults: [MKMapItem] = []
     
@@ -82,8 +85,11 @@ struct ContentView: View {
                 Spacer()
                 
                 //search buttons
-                BeantownButtons(position: $position, searchResults: $searchResults)
-                    .padding(.top)
+                BeantownButtons(position: $position,
+                                searchResults: $searchResults,
+                                visibleRegion: visibleRegion
+                )
+                .padding(.top)
                 
                 Spacer()
             }
@@ -92,6 +98,12 @@ struct ContentView: View {
         //when searchresults are changed, below code to set camera position accordingly
         .onChange(of: searchResults) {
             position = .automatic
+        }
+        //modifier to get data of visible region
+        //this modifier will collect visible region data once user stop interacting w the map
+        //to get constatnt changes to visible region (w/o user stopping), we can specify frequency parameter 
+        .onMapCameraChange { context in
+            visibleRegion = context.region
         }
     }
 }
