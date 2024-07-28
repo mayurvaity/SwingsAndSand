@@ -15,11 +15,15 @@ extension CLLocationCoordinate2D {
 
 struct ContentView: View {
     
-    //to keep searchresults data 
+    //to track the position when user has move the map view
+    @State private var position: MapCameraPosition = .automatic
+    
+    //to keep searchresults data
     @State private var searchResults: [MKMapItem] = []
     
     var body: some View {
-        Map {
+        //passing tracked position to the map initializer
+        Map(position: $position) {
             //to create a marker (pin on map) to location of parking var
 //            Marker("Parking", coordinate: .parking)
             
@@ -41,7 +45,7 @@ struct ContentView: View {
             ForEach(searchResults, id: \.self) { result in
                 //creating marker for each search result
                 //this way marker take default styling and naming from MKMapItem results
-                Marker(item: result) 
+                Marker(item: result)
             }
         }
         //mapStyle .standard - to specify map style
@@ -61,6 +65,10 @@ struct ContentView: View {
                 Spacer()
             }
             .background(.thinMaterial) //to make buttons bg semi-transparent
+        }
+        //when searchresults are changed, below code to set camera position accordingly
+        .onChange(of: searchResults) {
+            position = .automatic
         }
     }
 }
