@@ -84,6 +84,8 @@ struct ContentView: View {
             }
             .annotationTitles(.hidden) //to hide names of the markers 
             
+            //to show user's current location on the map
+            UserAnnotation()
             
             //if route data is available, to display route on the map to selectedResult marker
             if let route {
@@ -136,6 +138,15 @@ struct ContentView: View {
         //to get constatnt changes to visible region (w/o user stopping), we can specify frequency parameter 
         .onMapCameraChange { context in
             visibleRegion = context.region
+        }
+        //to show map controls (buttons)
+        .mapControls {
+            //button when clicked it shows user's current location
+            MapUserLocationButton()
+            //shows compass on screen, when map is rotated by the user
+            MapCompass()
+            //shows zoom scale on map when user zooms in/ out on the map
+            MapScaleView()
         }
     }
     
